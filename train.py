@@ -10,12 +10,12 @@ X_test = np.genfromtxt("data/test_features.csv")
 y_test = np.genfromtxt("data/test_labels.csv")
 
 # Fit a model
-depth = 10
+depth = 8
 clf = RandomForestClassifier(max_depth=depth)
 clf.fit(X_train, y_train)
 
 acc = clf.score(X_test, y_test)
-print(acc)
+
 with open("metrics.txt", "w") as outfile:
     outfile.write("Accuracy: " + str(acc) + "\n")
 
