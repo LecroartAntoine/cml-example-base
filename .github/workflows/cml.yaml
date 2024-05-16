@@ -1,18 +1,24 @@
-name: model-training
+name: Test-CML
 on: [push]
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
       - uses: iterative/setup-cml@v1
       - name: Train model
+        run: |
+          # Your ML workflow goes here
+          pip install -r requirements.txt
+          python train.py
+      - name: Write CML report
         env:
           REPO_TOKEN: ${{ secrets.REP_TOKEN }}
         run: |
-          pip install -r requirements.txt
-          python train.py
-          cat metrics.txt >> report.md
-          echo "![](./plot.png)" >> report.md
+          # Post reports as comments in GitHub PRs
+          cat results.txt >> report.md
           cml comment create report.md
